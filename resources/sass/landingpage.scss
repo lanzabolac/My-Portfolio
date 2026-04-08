@@ -1,3 +1,38 @@
+// animation
+html {
+    scroll-behavior: smooth;
+}
+#home{
+    scroll-margin-top: 100px;
+}
+
+#about{
+    scroll-margin-top: 250px;
+}
+#experience{
+    scroll-margin-top: 250px;
+}
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 0.8s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+body {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+body.loaded {
+    opacity: 1;
+}
+
+// animation end
+
 #portfolio-nav {
     background-color: #000;
     padding: 0.85rem 0;
@@ -230,7 +265,7 @@
         left: 200px;
 
         .name {
-            font: $fw-semibold $fs-extralarge $font-family-sans-serif; // 3.25rem
+            font: 650 $fs-extralarge $font-family-sans-serif; // 3.25rem
             color: $primary-color;
             line-height: 60px;
         }
@@ -586,7 +621,7 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: 60px 200px;
+    padding: 60px 200px 170px;
     gap: 0;
     position: relative;
 
@@ -781,29 +816,41 @@
 // about section end
 
 
+    .section-title {
+        font-size: $fs-extralarge;
+        font-weight: 700;
+        letter-spacing: 2px;
+        margin-top: 50px;
+        padding: 0px 200px;
+        .light {
+            background: linear-gradient(to right, rgba(255,255,255,0.2), rgba(255,255,255,0.6));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bold {
+            color: #fff;
+            margin-left: 3px;
+        }
+    }
+
 .tech-stack-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 60px 200px;
+    padding: 20px 200px 100px;
     gap: 24px;
-
-    .tech-title {
-        font: 600 1.5rem $font-family-sans-serif; // slightly bigger
-        color: $primary-color;
-        margin-bottom: 24px;
-    }
 
    .tech-boxes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
 
     .tech-box {
-        display: flex;           // make it a flex container
-        flex-direction: row;     // horizontal layout (icon - name)
-        align-items: center;     // vertically center icon and text
-        gap: 12px;               // space between icon and name
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
         background-color: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 8px;
@@ -818,22 +865,45 @@
             justify-content: center;
             width: 24px;
             height: 24px;
+            position: relative;
 
             svg {
                 width: 100%;
                 height: 100%;
             }
+
+            .icon-default {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: opacity 0.3s ease;
+            }
+
+            .icon-hover {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                inset: 0;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
         }
 
         &:hover {
-            background-color: $primary-color;
-            color: #fff;
-
-            .tech-icon svg path {
-                fill: #fff;
-            }
-
+            background-color: #e4e4e4;
+            color: #000;         
+            border-color: #fff;
             transform: translateY(-4px);
+
+            .tech-icon {
+                .icon-default {
+                    opacity: 0;    // ← grayscale hides
+                }
+                .icon-hover {
+                    opacity: 1;    // ← colored shows
+                }
+            }
         }
     }
 
@@ -869,6 +939,253 @@
         }
         .tech-boxes {
             gap: 12px;
+        }
+    }
+}
+
+
+// ─────────────────────────────────────────────
+// EXPERIENCE SECTION
+// ─────────────────────────────────────────────
+.experience-container {
+    padding: 30px 400px;
+
+    .experience-timeline {
+        margin-top: 50px;
+        position: relative;
+    }
+
+    .exp-entry {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 120px;
+
+        .exp-dot {
+            flex-shrink: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            background-color: #000;
+            margin-top: 6px;
+            position: relative;
+            z-index: 2;
+
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 3px;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        .exp-content {
+            display: flex;
+            gap: 40px;
+            flex: 1;
+        }
+
+        .exp-text {
+            flex: 1;
+
+            .exp-title-row {
+                display: flex;
+                align-items: baseline;
+                gap: 24px;
+                flex-wrap: wrap;
+            }
+
+            .exp-title {
+                font: 600 $fs-normal $font-family-sans-serif;
+                color: $primary-color;
+                margin-bottom: 4px;
+
+                .exp-company {
+                    font-weight: 700;
+                }
+            }
+
+            .exp-year {
+                font: 400 $fs-small $font-family-sans-serif;
+                color: $secondary-color;
+                white-space: nowrap;
+            }
+
+            .exp-subtitle {
+                font: 300 $fs-xs $font-family-sans-serif;
+                color: rgba(255, 255, 255, 0.45);
+                margin-bottom: 16px;
+            }
+
+            .exp-desc {
+                font: 300 $fs-small $font-family-sans-serif;
+                color: $secondary-color;
+                line-height: 1.8;
+                max-width: 520px;
+            }
+        }
+
+        .exp-image {
+            flex-shrink: 0;
+            display: flex;
+            gap: 8px;
+
+            img {
+                width: 150px;
+                height: 200px;
+                object-fit: cover;
+                border-radius: 2px;
+                opacity: 0.85;
+                transition: opacity 0.25s ease;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    // ── LEFT SIDE (independent)
+    .exp-left {
+        flex-direction: row;
+        padding-left: 30px;
+
+        .exp-dot {
+            margin-right: 15px;
+        }
+
+        .exp-content {
+            flex-direction: row;
+        }
+
+        .exp-text {
+            text-align: left;
+        }
+    }
+
+    // ── RIGHT SIDE (independent)
+    .exp-right {
+        flex-direction: row-reverse;
+        padding-right: 30px;
+
+        .exp-dot {
+            margin-left: 15px;
+        }
+
+        .exp-content {
+            flex-direction: row-reverse;
+        }
+
+        .exp-text {
+            text-align: right;
+
+            .exp-title-row {
+                justify-content: flex-end;
+            }
+
+            .exp-desc {
+                margin-left: auto;
+            }
+        }
+    }
+
+    // ── DESKTOP ≤ 1400px
+    @media (max-width: 1400px) {
+        padding: 60px 100px;
+    }
+
+    // ── DESKTOP ≤ 1200px
+    @media (max-width: 1200px) {
+        padding: 60px 60px;
+
+        .exp-entry .exp-image img {
+            width: 120px;
+            height: 165px;
+        }
+    }
+
+    // ── TABLET ≤ 992px
+    @media (max-width: 992px) {
+        padding: 50px 24px;
+
+        .exp-entry {
+            flex-direction: column !important;
+            padding-left: 24px !important;
+            padding-right: 0 !important;
+            text-align: left !important;
+            margin-bottom: 60px;
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+
+            .exp-dot {
+                position: absolute;
+                left: -7px;
+                top: 4px;
+                margin: 0;
+            }
+
+            .exp-content {
+                flex-direction: column !important;
+                gap: 24px;
+            }
+
+            .exp-text {
+                .exp-title-row {
+                    justify-content: flex-start !important;
+                }
+
+                .exp-desc {
+                    max-width: 100%;
+                    margin-left: 0 !important;
+                }
+            }
+
+            .exp-image {
+                flex-direction: row;
+
+                img {
+                    width: 140px;
+                    height: 190px;
+                }
+            }
+        }
+    }
+
+    // ── MOBILE ≤ 768px
+    @media (max-width: 768px) {
+        padding: 40px 20px;
+
+        .exp-entry {
+            .exp-text {
+                .exp-title {
+                    font-size: $fs-small;
+                }
+
+                .exp-desc {
+                    font-size: $fs-xs;
+                }
+            }
+
+            .exp-image img {
+                width: 110px;
+                height: 150px;
+            }
+        }
+    }
+
+    // ── SMALL MOBILE ≤ 480px
+    @media (max-width: 480px) {
+        padding: 30px 16px;
+
+        .exp-entry .exp-image {
+            flex-direction: column;
+
+            img {
+                width: 100%;
+                height: 180px;
+            }
         }
     }
 }
